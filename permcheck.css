@@ -1,0 +1,91 @@
+## Name: permcheck
+## Body: N
+##
+## Developed by: Steve Goldberg and Sandro Herrmann
+## Installed by: Steve Goldberg
+## Date created: 11-Apr-2012
+## Date updated: 19-Apr-2012
+## NOTE: This does not take into account user permissions, only groups.
+## @noparams
+
+## Declare a number of helpful variables
+#set ($containerManagerClass=$action.class.forName('com.atlassian.spring.container.ContainerManager'))
+#set ($getInstanceMethod=$containerManagerClass.getDeclaredMethod('getInstance',null))
+#set ($containerManager=$getInstanceMethod.invoke(null,null))
+#set ($containerContext=$containerManager.containerContext)
+#set ($contentPermissionManager=$containerContext.getComponent('contentPermissionManager'))
+
+## Declare a number of default variable values
+#set ($spacelist = [])
+#set ($pagelist = [])
+#set ($spaceallowadmin = false)
+#set ($spaceallowvendaeditor = false)
+#set ($spaceallowvenda = false)
+#set ($spaceallowclient = false)
+#set ($pageallowadmin = false)
+#set ($pageallowvendaeditor = false)
+#set ($pageallowvenda = false)
+#set ($pageallowclient = false)
+
+## Build an array with all the space group permissions
+#foreach ($spacePermission in $content.space.permissions)
+	#if ($spacePermission.isGroupPermission() && $spacePermission.type == "VIEWSPACE")
+		#set ($spacelistitem = $spacelist.add($spacePermission.group))
+	#end
+#end
+
+## Build an array with all the page group permissions
+#foreach ($contentPermissionSet in $contentPermissionManager.getContentPermissionSets($content,"View"))
+	#foreach ($contentPermission in $contentPermissionSet)
+		#if ($contentPermission.isGroupPermission())
+			#set ($pagelistitem = $pagelist.add($contentPermission.groupName))
+		#end
+	#end
+#end
+
+## Check the space array for groups
+#foreach ($spacelistitem in $spacelist)
+	#if ($spacelistitem == "confluence-administrators")
+		#set ($spaceallowadmin = true)
+	#elseif ($spacelistitem == "venda-editor")
+		#set ($spaceallowvendaeditor = true)
+	#elseif ($spacelistitem == "venda")
+		#set ($spaceallowvenda = true)
+	#elseif ($spacelistitem == "client")
+		#set ($spaceallowclient = true)
+	#end
+#end
+
+## Check the page array for groups
+#foreach ($pagelistitem in $pagelist)
+	#if ($pagelistitem == "confluence-administrators")
+		#set ($pageallowadmin = true)
+	#elseif ($pagelistitem == "venda-editor")
+		#set ($pageallowvendaeditor = true)
+	#elseif ($pagelistitem == "venda")
+		#set ($pageallowvenda = true)
+	#elseif ($pagelistitem == "client")
+		#set ($pageallowclient = true)
+	#end
+#end
+
+## Work out the permissions
+#if ($spaceallowclient && ($pageallowclient || $pagelist.isEmpty()))
+	#set ($access = "Clients and Venda")
+	#set ($spanclass = "permClient")
+#elseif ($spaceallowvenda && ($pageallowvenda || $pagelist.isEmpty()))
+	#set ($access = "Venda and specified individuals only")
+	#set ($spanclass = "permVenda")
+#elseif ($spaceallowvendaeditor && ($pageallowvendaeditor || $pagelist.isEmpty()))
+	#set ($access = "Venda Editors and Administrators only")
+	#set ($spanclass = "permNotVenda")
+#elseif ($spaceallowadmin && ($pageallowadmin || $pagelist.isEmpty()))
+	#set ($access = "Administrators only")
+	#set ($spanclass = "permNotVenda")
+#else
+	#set ($access = "Special permissions apply")
+	#set ($spanclass = "permNotVenda")
+#end
+
+## Print the HTML
+<a class="permCheck" id="action-page-permissions-link" href="#"><span class="smalltext $spanclass">Classification: $access</span></a>
