@@ -1,0 +1,82 @@
+## Macro title: Column Width Setter
+## Body processing: Rendered
+##
+## Developed by: Steve Goldberg
+## Date created: 14-Sep-2011
+## Date updated: 10-Apr-2012
+## Installed by: Steve Goldberg
+
+## @param id:title=Table ID|type=string|desc=Enter an ID for the table, it can be anything as long as it is not reused on this page.
+#if ($paramid.length() > 0)
+	#set($paramid = $param0)
+#else
+	#set($paramid = "All")
+#end
+## @param tablewidth:title=Table Width|type=string|desc=Enter a width for the entire table.
+#if ($paramtablewidth.length() > 0)
+	#set($paramtablewidth = $param1)
+	<style>#SteveTable$paramid .confluenceTable {width: $paramtablewidth;}</style>
+#else
+#end
+## @param vert:title=Do all headers run down the first column?|type=boolean|default=false
+## @param width1:title=1st Column Width|type=string|desc=The width of the 1st column in px or %.
+#if ($paramwidth1.length() > 0)
+	#set($paramwidth1 = $param2)
+	#if ($paramvert == true)
+		<style>#SteveTable$paramid .confluenceTh:first-child {width: $paramwidth1;}</style>
+	#else 
+		<style>#SteveTable$paramid .confluenceTd:first-child {width: $paramwidth1;}</style>
+	#end
+#else
+#end
+## @param width2:title=2nd Column Width|type=string|desc=The width of the 2nd column in px or %.
+#if ($paramwidth2.length() > 0)
+	#set($paramwidth2 = $param3)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(2) {width: $paramwidth2;}</style>
+#else
+#end
+## @param width3:title=3rd Column Width|type=string|desc=The width of the 3rd column in px or %.
+#if ($paramwidth3.length() > 0)
+	#set($paramwidth3 = $param4)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(3) {width: $paramwidth3;}</style>
+#else
+#end
+## @param width4:title=4th Column Width|type=string|desc=The width of the 4th column in px or %.
+#if ($paramwidth4.length() > 0)
+	#set($paramwidth4 = $param5)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(4) {width: $paramwidth4;}</style>
+#else
+#end
+## @param width5:title=5th Column Width|type=string|desc=The width of the 5th column in px or %.
+#if ($paramwidth5.length() > 0)
+	#set($paramwidth5 = $param5)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(5) {width: $paramwidth5;}</style>
+#else
+#end
+## @param width6:title=6th Column Width|type=string|desc=The width of the 6th column in px or %.
+#if ($paramwidth6.length() > 0)
+	#set($paramwidth6 = $param6)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(6) {width: $paramwidth6;}</style>
+#else
+#end
+## @param width7:title=7th Column Width|type=string|desc=The width of the 7th column in px or %.
+#if ($paramwidth7.length() > 0)
+	#set($paramwidth1 = $param7)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(7) {width: $paramwidth7;}</style>
+#else
+#end
+## @param width8:title=8th Column Width|type=string|desc=The width of the 8th column in px or %.
+#if ($paramwidth8.length() > 0)
+	#set($paramwidth8 = $param8)
+	<style>#SteveTable$paramid .confluenceTd:nth-child(8) {width: $paramwidth8;}</style>
+#else
+#end
+## @param bordercolor:title=Border Color|type=string|desc=Enter a color for the borders.
+#if ($parambordercolor.length() > 0)
+	#set($parambordercolor = $param9)
+	<style>#SteveTable$paramid .confluenceTd {border-color: $parambordercolor !important;}</style>
+#else
+#end
+<div id="SteveTable$paramid">
+	$body
+</div>

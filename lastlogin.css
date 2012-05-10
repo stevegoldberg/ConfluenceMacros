@@ -1,0 +1,44 @@
+## Macro name: lastlogin
+## Macro has a body: N
+##
+## Developed by: Remo Siegwart and Steve Goldberg (https://answers.atlassian.com/questions/33385/macro-that-produces-a-list-of-users-last-login-date)
+## Date created: 07-Feb-2012
+## Date updated: 14-Feb-2012
+## Prints a table with all users in it with a column showing when they last logged in.
+
+## @noparams
+#set($containerManagerClass = $content.class.forName('com.atlassian.spring.container.ContainerManager'))
+#set($getInstanceMethod = $containerManagerClass.getDeclaredMethod('getInstance',null))
+#set($containerManager = $getInstanceMethod.invoke(null,null))
+#set($containerContext = $containerManager.containerContext)
+
+#set($loginManager = $containerContext.getComponent('loginManager'))
+#set($crowdService = $containerContext.getComponent('crowdService'))
+#set($users = $userAccessor.getUsers())
+#set($totalactiveusers = 0)
+
+<table class="confluenceTable">
+    <tr>
+        <th class="confluenceTh">User</th>
+        <th class="confluenceTh">Last Successful Login</th>
+        <th class="confluenceTh">Creation</th>
+        <th class="confluenceTh">Active</th>
+    </tr>
+    #foreach($user in $users)
+        #set($crowdUser = $crowdService.getUser($user.name))
+        <tr>
+            <td class="confluenceTd">#usernameLink($user.name)</td>
+            <td class="confluenceTd">$action.dateFormatter.formatGivenString('yyyy/MM/dd HH:mm', $loginManager.getLoginInfo($user).lastSuccessfulLoginDate)</td>
+            <td class="confluenceTd">$action.dateFormatter.formatGivenString('yyyy/MM/dd HH:mm', $crowdUser.createdDate)</td>
+            <td class="confluenceTd" style="text-align:center;">
+                #if($userAccessor.isDeactivated($user))
+                    <img src="/s/en_GB/3047/11/_/images/icons/emoticons/error.png" width="18" height="18" border="0">
+                #else
+                    <img src="/s/en_GB/3047/11/_/images/icons/emoticons/check.png" width="18" height="18" border="0">
+					#set($totalactiveusers = $totalactiveusers + 1)
+                #end
+            </td>
+        </tr>
+    #end
+</table>
+<p>Total active users: $totalactiveusers</p>

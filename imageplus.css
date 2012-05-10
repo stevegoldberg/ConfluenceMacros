@@ -1,0 +1,59 @@
+## Title: Image Plus
+## Body processing: Rendered
+##
+## Developed by: Steve Goldberg
+## Date created: 13/10/2011
+## Date updated: 07/11/2011
+## Installed by: Steve Goldberg
+
+## @param imageid:title=Image ID|type=string|desc=Enter an ID for the image, it can be anything as long as it is not reused on this page.
+#if ($paramimageid.length() > 0)
+	#set($paramimageid = $param0)
+#else
+	#set($paramimageid = "All")
+#end
+## @param imagefloat:title=Image Float|type=string|desc=Enter either "right" or "left" to have the image move to a side of the page.
+#if ($paramimagefloat.length() > 0)
+	#set($paramimagefloat = $param1)
+	<style>#SteveImage$paramimageid {float: $paramimagefloat}</style>
+#else
+#end
+## @param imagecaption:title=Caption|type=string|desc=Enter a caption for the image.
+#if ($paramimagecaption.length() > 0)
+	#set($paramimagecaption = $param2)
+#else
+#end
+## @param imagewidth:title=Image Width|type=string|desc=Enter a width for the image container in px or %.
+#if ($paramimagewidth.length() > 0)
+	#set($paramimagewidth = $param3)
+	<style>#SteveImage$paramimageid {width: $paramimagewidth;}</style>
+#else
+#end
+## @param imagealign:title=Image Alignment|type=string|desc=Enter an alignment for the image and caption.
+#if ($paramimagealign.length() > 0)
+	#set($paramimagealign = $param4)
+	<style>#SteveImage$paramimageid {text-align: $paramimagealign;}</style>
+#else
+#end
+## @param imagelink:title=Link URL|type=string|desc=Enter a link for the image to link to.
+<div id="SteveImage$paramimageid">
+#if ($paramimagelink.length() > 0)
+	#set($paramimagelink = $param5)
+	<a href="$paramimagelink">$body</a>
+#else
+	$body
+#end
+
+## @param imagemargin:title=Margin|type=string|desc=Enter a margin for the image and caption (default is 10px).
+#if ($paramimagemargin.length() > 0)
+	#set($paramimagemargin = $param6)
+	<style>#SteveImage$paramimageid {margin: $paramimagemargin;}</style>
+#else 
+	<style>#SteveImage$paramimageid {margin: 10px;}</style>
+#end
+
+#if ($paramimagecaption.length() > 0)	
+	<p class="SteveImageCaption">$paramimagecaption</p>
+#else
+#end	
+</div>
