@@ -1,0 +1,12 @@
+.permCheck span {
+	border-radius: 3px;
+	padding: 1px 2px;
+}
+
+.permCheck {
+	line-height: 20px;
+}
+
+a.permCheck:hover {
+	text-decoration: none !important;
+}
