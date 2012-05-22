@@ -1,0 +1,11 @@
+.SteveImageCaption {
+	color: #0092D2 !important;
+}
+
+.SteveCaption, .SteveImageCaption {
+	margin-top: 0 !important;
+}
+
+.imagecaption, .SteveImageCaption {
+	font-size: 9pt !important;
+}

@@ -1,0 +1,16 @@
+.noindentsnobullets {
+	margin: 10px 0;
+}
+
+.noindentsnobullets li, .nobullets li {
+	list-style-type: none;
+	margin-left: -25px !important;
+}
+
+.noindentsnobullets ul ul li, .nobullets ul ul li, .noindentsnobullets ol ol li, .nobullets ol ol li {
+	list-style-type: disc;
+}
+
+#refpanel ul, #refpanel ol {
+	margin: 0;
+}

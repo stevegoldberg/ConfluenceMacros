@@ -1,0 +1,27 @@
+.imagecaption, .imagecaptiontable {
+	color: #0092D2 !important;
+}
+
+.imagecaption, .SteveImageCaption {
+	font-size: 9pt !important;
+}
+
+.imagecaptiontable {
+	margin: 10px 0 -5px !important;
+}
+
+.imagecaption {
+	margin-top: -10px !important;	
+}
+
+.image-wrap + .imagecaption {
+	margin-top: -5px !important;
+}
+
+.SteveCaption, .SteveImageCaption, .confluenceTable .imagecaption {
+	margin-top: 0 !important;
+}
+
+li p.imagecaption {
+	margin-top: -3px !important;
+}

@@ -1,0 +1,15 @@
+## Macro title: Caption
+## Macro has a body: Y
+## Body processing: Convert Wiki Markup to HTML
+## Output: HTML
+##
+## Developed by: Steve Goldberg
+## Date created: 31/10/2011
+## Date updated: 07/11/2011
+
+## @param table:title=Caption above a table?|type=boolean|default=false
+#if ($paramtable == true)
+	<p class="imagecaptiontable">$body</p>
+#else
+	<p class="imagecaption">$body</p>
+#end 

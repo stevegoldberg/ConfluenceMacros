@@ -1,0 +1,18 @@
+.SteveButton a {
+	background: #fff url("/s/en_GB/3143/54/3.5.2/_/download/resources/com.atlassian.auiplugin:ajs/images/toolbar/aui-toolbar-button-inactive-bg.png") bottom left repeat-x !important;
+	border: 1px solid #ddd !important;
+	border-radius: 3px;
+	padding: 7px;
+
+}
+
+.SteveButton a:hover {
+	border-color: #999 !important;
+}
+
+#prevnext .prev, #prevnext .home, #prevnext .next {
+	height: 35px;
+	float: left;
+	text-align: center;
+	width: 33%;
+}

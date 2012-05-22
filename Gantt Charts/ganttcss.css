@@ -1,0 +1,79 @@
+.gantt_Blue {
+	background: #2e7ce8; /* Old browsers */
+	background: -moz-linear-gradient(left, #2e7ce8 0%, #003c96 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#2e7ce8), color-stop(100%,#003c96)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, #2e7ce8 0%,#003c96 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, #2e7ce8 0%,#003c96 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, #2e7ce8 0%,#003c96 100%); /* IE10+ */
+	background: linear-gradient(left, #2e7ce8 0%,#003c96 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e7ce8', endColorstr='#003c96',GradientType=1 ); /* IE6-9 */	
+}
+.gantt_Green {
+	background: #24991e; /* Old browsers */
+	background: -moz-linear-gradient(left, #24991e 0%, #034c00 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#24991e), color-stop(100%,#034c00)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, #24991e 0%,#034c00 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, #24991e 0%,#034c00 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, #24991e 0%,#034c00 100%); /* IE10+ */
+	background: linear-gradient(left, #24991e 0%,#034c00 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24991e', endColorstr='#034c00',GradientType=1 ); /* IE6-9 */
+}
+.gantt_Grey {
+	background: #3c3c3c;
+}
+.ganttcontainer {
+	background: url(/download/attachments/1114121/ganttbg.gif) top left repeat;
+	border-bottom: 1px solid #ccc;
+	margin-top: 10px;
+	width: 853px;
+}
+.ganttheader {
+	text-align: center;
+	width: 100%;
+}
+.ganttcol {
+	background: #0092d2;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	float: left;
+	width: 70px;
+}
+.ganttcol:first-child {
+	border-left: 1px solid #ccc;
+}
+.ganttrows {
+	font-size: 11px;
+	margin-bottom: 20px;
+	min-height: 32px;
+	padding: 40px 0 0 0;
+	text-align: center;
+}
+.ganttrow:first-of-type {
+	margin-top: 16px !important;
+}
+.ganttrow, .ganttrow a div {
+	border-radius: 10px;
+}
+.ganttrow, .ganttcol {
+	color: white !important;
+	line-height: 15px;
+	padding: 10px 0;
+}
+.ganttrow div {
+	margin: -10px 0;
+	padding: 10px 0;
+}
+.ganttrow a {
+	color: white !important;
+	font-weight: bold;
+	text-decoration: none !important;
+}
+.ganttinnerdiv {
+	padding: 5px !important;
+}
+.ganttinnerdiv img {
+	margin-bottom: -0.7em; 
+}
+a .ganttinnerdiv:hover {
+	background: #ff640a;
+}
