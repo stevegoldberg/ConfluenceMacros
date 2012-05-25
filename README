@@ -5,3 +5,5 @@ The different macros are divided up into their folders.
 The files are formatted as CSS files as Notepad++ does a good job of highlighting useful Velocity snippets when formatted as such. I recommend using it for writing User Macros. 
 
 Where there is appropriate CSS for a macro, they have the word 'css' added to the end of the filename before the file extension. This can be added either to your global stylesheet, Custom HTML section, or into the macro itself using a <style> tag.
+
+Updated 25/05/2012
