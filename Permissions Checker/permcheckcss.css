@@ -4,9 +4,22 @@
 }
 
 .permCheck {
+	color: white;
 	line-height: 20px;
 }
 
 a.permCheck:hover {
 	text-decoration: none !important;
+}
+
+.permClient {
+	background-color: #0092D2;
+}
+
+.permVenda {
+	background-color: #FF640A;
+}
+
+.permNotVenda {
+	background-color: #3C3C3C;
 }
