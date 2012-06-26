@@ -3,96 +3,114 @@
 ##
 ## Developed by: Steve Goldberg
 ## Date created: 23-Mar-2012
-## Date updated: 10-May-2012
+## Date updated: 15-May-2012
 ## A Gantt row - must be used in a Gantt container.
 
-## @param title:title=Item Title|type=string
-## @param tooltip:title=Tool Tip|type=string|desc=Appears when you hover over a row, e.g., "Last updated July 22, 2012".
+## @param title:title=Item Title|required=true|type=string
+## @param tooltip:title=Tooltip|type=string|desc=Appears when you hover over a row, e.g., "Last updated July 22, 2012".
+## @param startmonth:title=Start Month|type=string|required=true|desc=Enter the number of the month this item starts, e.g., "7" for July.
+## @param endmonth:title=End Month|type=string|required=true|desc=Enter the number of the month this item ends, e.g., "11" for November.
+## @param status:title=Status|type=enum|enumValues=Not Started,In Progress,Complete|required=true
 ## @param url:title=URL|type=string
-## @param startmonth:title=Start Month|type=string|desc=Enter the number of the month this item starts, e.g., "7" for July.
-## @param endmonth:title=End Month|type=string|desc=Enter the number of the month this item ends, e.g., "11" for November.
-## @param closed:title=Closed Issue?|type=boolean|desc=Tick this box if the issue is closed/inactive.
 
 ## START MONTH
 #if ( ( $paramstartmonth == "1" ) )
 	#set ($left = 1)
 	#set ($marginleft = "1px")
 #elseif ( ( $paramstartmonth == "2" ) )
-	#set ($left = 52)
-	#set ($marginleft = "52px")
+	#set ($left = 72)
+	#set ($marginleft = "72px")
 #elseif ( ( $paramstartmonth == "3" ) )
-	#set ($left = 103)
-	#set ($marginleft = "103px")
+	#set ($left = 143)
+	#set ($marginleft = "143px")
 #elseif ( ( $paramstartmonth == "4" ) )
-	#set ($left = 154)
-	#set ($marginleft = "154px")
+	#set ($left = 214)
+	#set ($marginleft = "214px")
 #elseif ( ( $paramstartmonth == "5" ) )
-	#set ($left = 205)
-	#set ($marginleft = "205px")
+	#set ($left = 285)
+	#set ($marginleft = "285px")
 #elseif ( ( $paramstartmonth == "6" ) )
-	#set ($left = 256)
-	#set ($marginleft = "256px")
+	#set ($left = 356)
+	#set ($marginleft = "356px")
 #elseif ( ( $paramstartmonth == "7" ) )
-	#set ($left = 307)
-	#set ($marginleft = "307px")
+	#set ($left = 427)
+	#set ($marginleft = "427px")
 #elseif ( ( $paramstartmonth == "8" ) )
-	#set ($left = 358)
-	#set ($marginleft = "358px")
+	#set ($left = 498)
+	#set ($marginleft = "498px")
 #elseif ( ( $paramstartmonth == "9" ) )
-	#set ($left = 409)
-	#set ($marginleft = "409px")
+	#set ($left = 569)
+	#set ($marginleft = "569px")
 #elseif ( ( $paramstartmonth == "10" ) )
-	#set ($left = 460)
-	#set ($marginleft = "460px")
+	#set ($left = 640)
+	#set ($marginleft = "640px")
 #elseif ( ( $paramstartmonth == "11" ) )
-	#set ($left = 511)
-	#set ($marginleft = "511px")
+	#set ($left = 711)
+	#set ($marginleft = "711px")
+#elseif ( ( $paramstartmonth == "12" ) )
+	#set ($left = 782)
+	#set ($marginleft = "782px")
 #end
 
 ## END MONTH
-#if ( ( $paramendmonth == "2" ) )
-	#set ($right = 92)
+#if ( ( $paramendmonth == "1" ) )
+	#set ($right = 61)
+	#set ($width = $right - $left)
+#elseif ( ( $paramendmonth == "2" ) )
+	#set ($right = 132)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "3" ) )
-	#set ($right = 143)
+	#set ($right = 203)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "4" ) )
-	#set ($right = 194)
+	#set ($right = 274)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "5" ) )
-	#set ($right = 245)
+	#set ($right = 345)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "6" ) )
-	#set ($right = 296)
+	#set ($right = 416)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "7" ) )
-	#set ($right = 347)
+	#set ($right = 487)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "8" ) )
-	#set ($right = 398)
+	#set ($right = 558)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "9" ) )
-	#set ($right = 449)
+	#set ($right = 629)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "10" ) )
-	#set ($right = 500)
+	#set ($right = 700)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "11" ) )
-	#set ($right = 551)
+	#set ($right = 771)
 	#set ($width = $right - $left)
 #elseif ( ( $paramendmonth == "12" ) )
-	#set ($right = 602)
+	#set ($right = 842)
 	#set ($width = $right - $left)
 #end
 
 ## CREATE THE ROW
 #set ($width = $width + "px")
 #set ($style = "margin-left: $!marginleft; width: $!width;")
-#if ($paramclosed)
-	#set ($extrastyle = "background: black;")
+#set ($extrastyle = "gantt_Blue")
+#set ($title = $paramtitle)
+#if ($paramstatus == "Not Started")
+	#set ($tooltip = "Not yet started")
+#elseif ($paramstatus == "In Progress")
+	#set ($extrastyle = "gantt_Green")
+	#set ($tooltip = "In progress")
+#elseif ($paramstatus == "Complete")
+	#set ($extrastyle = "gantt_Grey")
+	#set ($title = "COMPLETE: " + $paramtitle)
+	#set ($tooltip = "Complete")
+#end
+#if ($paramtooltip)
+	#set ($tooltip = $tooltip + ". " + $paramtooltip + ".")
 #end
 #if ($paramurl)
-	<div class="ganttrow ganttlink" style="$style" title="$!paramtooltip"><a href="$!paramurl" target="_blank"><div class="ganttinnerdiv" style="width: $!width; $!extrastyle">$!paramtitle <img src="/download/attachments/1114121/exticon.png"></div></a></div>
+	<div class="ganttrow ganttlink" style="$style" title="$!tooltip"><a href="$!paramurl" target="_blank"><div class="ganttinnerdiv $!extrastyle" style="width: $!width;">$!title <img src="/download/attachments/1114121/exticon.png"></div></a></div>
 #else
-	<div class="ganttrow ganttinnerdiv" style="$style $!extrastyle" title="$!paramtooltip">$!paramtitle</div>
+	<div class="ganttrow ganttinnerdiv $!extrastyle" style="$style" title="$!tooltip">$!title</div>
 #end

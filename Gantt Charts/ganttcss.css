@@ -21,7 +21,7 @@
 .gantt_Grey {
 	background: #3c3c3c;
 }
-.ganttcontainer {
+.ganttcontainer { /* NOTE: Make sure you update the background link to where you have it hosted! */
 	background: url(/download/attachments/1114121/ganttbg.gif) top left repeat;
 	border-bottom: 1px solid #ccc;
 	margin-top: 10px;

@@ -3,11 +3,10 @@
 ##
 ## Developed by: Steve Goldberg
 ## Date created: 23-Mar-2012
-## Date updated: 27-Mar-2012
+## Date updated: 14-May-2012
 ## A Gantt chart container 
 ## Gradients: http://www.colorzilla.com/gradient-editor/#2e7ce8+0,003c96+100;Custom
 
-## @param color:title=Row Color|type=enum|enumValues=Blue,Green,Purple|desc=Select the color of the rows
 ## @param year:title=Year|type=string|desc=Enter the last two digits of the year this Gantt chart applies to, e.g., "12" or "13"|default=12
 #if ($paramyear.length() > 0)
 	#set ($year = $paramyear)
@@ -30,7 +29,7 @@
 		<div class="ganttcol">Nov-$!year</div>
 		<div class="ganttcol">Dec-$!year</div>		
 	</div>
-	<div class="ganttrows gantt_$!paramcolor">
+	<div class="ganttrows">
 		$body
 	</div>
 </div>
