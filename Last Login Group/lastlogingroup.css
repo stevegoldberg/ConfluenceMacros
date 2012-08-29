@@ -1,0 +1,44 @@
+## Macro name: lastlogingroup
+## Macro has a body: N
+##
+## Developed by: Remo Siegwart and Steve Goldberg (https://answers.atlassian.com/questions/33385/macro-that-produces-a-list-of-users-last-login-date)
+## Date created: 01-Aug-2012
+## Date updated: 29-Aug-2012
+## Prints a table with all users in it with a column showing when they last logged in.
+
+## @param group:title=Group|type=string|required=true|desc=The group you want to report on
+
+#set ($containerManagerClass = $content.class.forName('com.atlassian.spring.container.ContainerManager'))
+#set ($getInstanceMethod = $containerManagerClass.getDeclaredMethod('getInstance',null))
+#set ($containerManager = $getInstanceMethod.invoke(null,null))
+#set ($containerContext = $containerManager.containerContext)
+ 
+#set ($loginManager = $containerContext.getComponent('loginManager'))
+#set ($group = $userAccessor.getGroup($paramgroup))
+#if ($group)
+    #set ($usernames = $userAccessor.getMemberNames($group))
+	## Add a conditional to hide the results from people that shouldn't see it - replace "Venda" with the user group you want this information to be viewable by.
+	<ac:macro ac:name="show-if">
+		<ac:parameter ac:name="match">all</ac:parameter>
+		<ac:parameter ac:name="group">venda</ac:parameter>
+		<ac:rich-text-body>
+			<table class="confluenceTable">
+				<tr>
+					<th class="confluenceTh">User</th>
+					<th class="confluenceTh">Email</th>
+					<th class="confluenceTh">Last Successful Login Date</th>
+				</tr>
+				#foreach ($username in $usernames)
+					#set ($user = $userAccessor.getUser($username))
+					<tr>
+						<td class="confluenceTd">#usernameLink($user.name)</td>
+						<td class="confluenceTd">#usernameLink($user.email)</td> 
+						<td class="confluenceTd">$action.dateFormatter.formatDateTime($loginManager.getLoginInfo($user).lastSuccessfulLoginDate)</td>
+					</tr>
+				#end
+			</table>
+		</ac:rich-text-body>
+	</ac:macro>
+#else
+    <p><i>No group with name "$paramgroup" found!</i></p>
+#end
