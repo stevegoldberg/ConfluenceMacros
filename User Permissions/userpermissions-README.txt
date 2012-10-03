@@ -1,0 +1,3 @@
+The userpermissions macro produces two tables for the user specified in the first parameter. The first table contains a list of all the spaces where the user has individual permissions assigned to him; the second a list of spaces where the user has permissions assigned to him by being a member of a group (as well as what  that group is). 
+
+The whole macro is contained within a 'show-if' macro, which means that you can set this macro to only show to those in the "confluence-administrators" user group.

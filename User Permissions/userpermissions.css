@@ -1,0 +1,61 @@
+## Macro title: userpermissions
+## Macro has a body: N
+##
+## Developed by: Arantxa Lacasa Madero, Amalia Sanusi, Steve Goldberg
+## Date created: 01-Aug-2012
+## Date updated: 03-Oct-2012
+## Documentation: https://answers.atlassian.com/questions/73701/macro-to-get-all-permissions-for-a-specific-user
+## Installed by: Steve Goldberg
+    
+## Macro that lists all the spaces a user can access
+   
+## @param username:title=Username|type=string|required=true
+
+<ac:macro ac:name="show-if">
+	<ac:parameter ac:name="match">all</ac:parameter>
+	<ac:parameter ac:name="group">confluence-administrators</ac:parameter>
+	<ac:rich-text-body>
+		<div id="tableUsername">
+			#set($allSpaces = $spaceManager.getAllSpaces())
+			#set($result1 = "")
+			#set($result2 = "")
+			  
+			#foreach($space in $allSpaces)  
+			  #foreach ($permission in $space.getPermissions())
+				#if ($permission.isUserPermission() && $permission.getType() == "VIEWSPACE" && $permission.getUserName() == ($paramusername))
+				  #set($result1 = "${result1}<tr>
+					<td class='confluenceTd'>$space.getName()</td>
+				  </tr>")
+				#elseif ($permission.isGroupPermission() && $permission.getType() == "VIEWSPACE")
+				  #set ( $groupString = $permission.getGroup() )
+					#if ($userAccessor.hasMembership("$groupString", "$paramusername"))
+					  #set($result2 = "${result2}<tr>
+						<td class='confluenceTd'>$space.getName()</td>
+						<td class='confluenceTd'>$groupString</td>
+					  </tr>")      
+					#end
+				#end
+			  #end
+			#end
+			<div style="float:left; width:50%;">
+				<h3>Individual Permissions</h3>
+				<table class="confluenceTable">
+					<tr>
+					  <th class="confluenceTh">Space</th>
+					</tr>
+					$result1
+				</table>
+			</div>
+			<div style="float:right; width:50%;">
+				<h3>Group Permissions</h3>
+				<table class="confluenceTable">
+					<tr>
+					  <th class="confluenceTh">Space</th>
+					  <th class="confluenceTh">Group</th>
+					</tr>
+					$result2
+				</table>
+			</div>
+		</div>
+	</ac:rich-text-body>
+</ac:macro>
