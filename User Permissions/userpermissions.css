@@ -3,7 +3,7 @@
 ##
 ## Developed by: Arantxa Lacasa Madero, Amalia Sanusi, Steve Goldberg
 ## Date created: 01-Aug-2012
-## Date updated: 03-Oct-2012
+## Date updated: 26-Oct-2012
 ## Documentation: https://answers.atlassian.com/questions/73701/macro-to-get-all-permissions-for-a-specific-user
 ## Installed by: Steve Goldberg
     
@@ -15,6 +15,7 @@
 	<ac:parameter ac:name="match">all</ac:parameter>
 	<ac:parameter ac:name="group">confluence-administrators</ac:parameter>
 	<ac:rich-text-body>
+		<p id="paraUsername">Showing permissions for user <b>"$paramusername"</b>.</p>
 		<div id="tableUsername">
 			#set($allSpaces = $spaceManager.getAllSpaces())
 			#set($result1 = "")
@@ -30,7 +31,7 @@
 				  #set ( $groupString = $permission.getGroup() )
 					#if ($userAccessor.hasMembership("$groupString", "$paramusername"))
 					  #set($result2 = "${result2}<tr>
-						<td class='confluenceTd'>$space.getName()</td>
+						<td class='confluenceTd'>$space.getName() ($space.Key)</td>
 						<td class='confluenceTd'>$groupString</td>
 					  </tr>")      
 					#end
