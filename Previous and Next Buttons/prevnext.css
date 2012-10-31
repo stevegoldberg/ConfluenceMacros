@@ -3,8 +3,8 @@
 ## Output: HTML
 ##
 ## Date created: 23-Feb-2012
-## Date updated: 02-Apr-2012
-## Developed by: Matthew J. Horn
+## Date updated: 31-Oct-2012
+## Developed by: Matthew J. Horn (main work) and Steve Goldberg (modifications)
 ## Installed by: Steve Goldberg
 ## From: http://confluence.atlassian.com/x/5AOTE
 ##
@@ -19,6 +19,7 @@
 ## Define the parameters
 ## @param WrapAtEnd:title=Wrap At End?|type=boolean|desc=Determine if clicking "Next" on the last page should go back around to the first page. If false, then the "Next" link does nothing.
 ## @param usehome:title=Use "Home"?|type=boolean|desc=Sets the text of the middle button to "Home". If false, then the space's name is used.
+## @param movetoheader:title Move to header?|type=boolean|desc=Ticking this box moves the buttons to the header.
 
 ## Define variables:
 #if ($paramusehome)
@@ -75,7 +76,12 @@
  <span class="prev SteveButton"<a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">&lt;&lt; $myArray.get($prev).getDisplayTitle()</a></span><span class="home SteveButton"><a href="$req.contextPath/display/$space.Key/">$!linktext</a></span><span class="next SteveButton"><a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$myArray.get($next).getDisplayTitle() &gt;&gt;</a></span>
 #end
 </div>
-<script type="text/javascript">
-var panel = jQuery('#prevnext').html().replace(/&nbsp;/g,'');
-jQuery('#prevnext').empty().append(panel);
-</script>
+
+## Whether the buttons should move to the header
+#if ($parammovetoheader)
+	<script type="text/javascript">
+	var panel = jQuery('#prevnext').html().replace(/&nbsp;/g,'');
+	jQuery('#prevnext').empty().append(panel);
+	jQuery('#prevnext').insertBefore('#main-header');
+	</script>
+#end
