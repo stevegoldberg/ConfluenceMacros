@@ -74,7 +74,7 @@
 	## Could easily replace the basic arrow images with grayed out ones and dead links if you want no wrapping and/or are at the first page.
 	## Use the $config object (of type BootStrapManager) to get the domain name
 	## Define the Next and Previous links
-	<div id="prevnext"> 
+	<div id="prevnext">
 		<span class="prev SteveButton"<a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">&lt;&lt; $myArray.get($prev).getDisplayTitle()</a></span><span class="home SteveButton"><a href="$req.contextPath/display/$space.Key/">$!linktext</a></span><span class="next SteveButton"><a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$myArray.get($next).getDisplayTitle() &gt;&gt;</a></span>
 	</div>
 #end
