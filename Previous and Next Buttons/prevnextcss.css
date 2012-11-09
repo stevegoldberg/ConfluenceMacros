@@ -10,6 +10,10 @@
 	border-color: #999 !important;
 }
 
+#prevnext {
+	padding: 10px 0;
+}
+
 #prevnext .prev, #prevnext .home, #prevnext .next {
 	height: 35px;
 	float: left;
