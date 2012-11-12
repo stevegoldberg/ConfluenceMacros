@@ -3,7 +3,7 @@
 ## Output: HTML
 ##
 ## Date created: 23-Feb-2012
-## Date updated: 09-Nov-2012
+## Date updated: 12-Nov-2012
 ## Developed by: Matthew J. Horn (main work) and Steve Goldberg (modifications)
 ## Installed by: Steve Goldberg
 ## From: http://confluence.atlassian.com/x/5AOTE
@@ -18,8 +18,31 @@
 
 ## Define the parameters
 ## @param WrapAtEnd:title=Wrap At End?|type=boolean|desc=Determine if clicking "Next" on the last page should go back around to the first page. If false, then the "Next" link does nothing.
-## @param usehome:title=Use "Home"?|type=boolean|desc=Sets the text of the middle button to "Home". If false, then the space's name is used.
-## @param movetoheader:title Move to header?|type=boolean|desc=Ticking this box moves the buttons to the header.
+## @param usehome:title=Set middle button text to "Home"?|type=boolean|desc=If false, then the space's name is used.
+## @param movetoheader:title=Move buttons to header?|type=boolean
+## @param hidehome:title=Hide the "Home" button?|type=boolean
+## @param displaynonehome:title=Apply display none on "Home" button?|type=Advanced use only.
+## @param hidepagenames:title=Hide Page Names?|type=boolean
+## @param raw:title=Strip styling?|type=boolean|desc=Advanced use only.
+
+## Define styling
+#set ($spanprevclass = "")
+#set ($spanhomeclass = "")
+#set ($spannextclass = "")
+
+#if (!$paramraw)
+	#set ($spanprevclass = "prev SteveButton")
+	#set ($spanhomeclass = "home SteveButton")
+	#set ($spannextclass = "next SteveButton")
+#end
+
+#if ($paramhidehome)
+	#set ($spanhomeclass = $spanhomeclass + " visibilityhidden")
+#end
+
+#if ($paramdisplaynonehome)
+	#set ($spanhomeclass = $spanhomeclass + " displaynone")
+#end
 
 ## Define variables:
 #if ($paramusehome)
@@ -55,7 +78,7 @@
 #end
 
 ## Wrap the rest of the macro in a check to make sure it's a content page and not a root page.
-#if ($content.isRootLevel() == "false") 
+#if ($content.isRootLevel() == "false")
 	## Use the $content object (of type ContentEntityObject) to get the root page
 	## Get root page:
 	#set ($rootpage = $content.getAncestors().get(0))
@@ -64,7 +87,7 @@
 	## Process this when the user gets to the last page:
 	#if ($next == $counter) 
 		## If you want users to wrap around to the beginning when they click "Next" at the last page:
-		#if ($paramWrapAtEnd == "true")
+		#if ($paramWrapAtEnd)
 			#set ($next = 0) 
 		## If you want no "wrapping":
 		#else
@@ -74,8 +97,15 @@
 	## Could easily replace the basic arrow images with grayed out ones and dead links if you want no wrapping and/or are at the first page.
 	## Use the $config object (of type BootStrapManager) to get the domain name
 	## Define the Next and Previous links
+	#if ($paramhidepagenames)
+		#set ($prevtext = "<<")
+		#set ($nexttext = ">>")
+	#else
+		#set ($prevtext = "<< " + $myArray.get($prev).getDisplayTitle())
+		#set ($nexttext = $myArray.get($next).getDisplayTitle() + " >>")
+	#end
 	<div id="prevnext">
-		<span class="prev SteveButton"<a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">&lt;&lt; $myArray.get($prev).getDisplayTitle()</a></span><span class="home SteveButton"><a href="$req.contextPath/display/$space.Key/">$!linktext</a></span><span class="next SteveButton"><a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$myArray.get($next).getDisplayTitle() &gt;&gt;</a></span>
+		<span class="$spanprevclass" title="$myArray.get($prev).getDisplayTitle()"><a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">$prevtext</a></span><span class="$spanhomeclass" title="Back to the homepage"><a href="$req.contextPath/display/$space.Key/">$!linktext</a></span><span class="$spannextclass" title="$myArray.get($next).getDisplayTitle()"><a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$nexttext</a></span>
 	</div>
 #end
 
