@@ -14,15 +14,17 @@
 ## Can be used in a page or a layout template.
 ##
 ## In a layout template, you would do something like this:
-## $helper.renderConfluenceMacro("{next_previous_links:NextImage=images/macros/forwardbutton.jpg|PrevImage=images/macros/backbutton.jpg|WrapAtEnd=false}")
+## $helper.renderConfluenceMacro("{next_previous_links:WrapAtEnd=false}")
 
 ## Define the parameters
 ## @param WrapAtEnd:title=Wrap At End?|type=boolean|desc=Determine if clicking "Next" on the last page should go back around to the first page. If false, then the "Next" link does nothing.
 ## @param usehome:title=Set middle button text to "Home"?|type=boolean|desc=If false, then the space's name is used.
 ## @param movetoheader:title=Move buttons to header?|type=boolean
+## @param hideprev:title=Hide the "Previous" button?|type=boolean
 ## @param hidehome:title=Hide the "Home" button?|type=boolean
-## @param displaynonehome:title=Apply display none on "Home" button?|type=Advanced use only.
+## @param hidenext:title=Hide the "Next" button?|type=boolean
 ## @param hidepagenames:title=Hide Page Names?|type=boolean
+## @param displaynonehome:title=Apply display none on "Home" button?|type=boolean|desc=Advanced use only.
 ## @param raw:title=Strip styling?|type=boolean|desc=Advanced use only.
 
 ## Define styling
@@ -36,13 +38,9 @@
 	#set ($spannextclass = "next SteveButton")
 #end
 
-#if ($paramhidehome)
-	#set ($spanhomeclass = $spanhomeclass + " visibilityhidden")
-#end
-
-#if ($paramdisplaynonehome)
-	#set ($spanhomeclass = $spanhomeclass + " displaynone")
-#end
+#if ($paramhideprev) #set ($spaninnerprevstyle = "display: none;") #end
+#if ($paramhidehome) #set ($spaninnerhomestyle = "display: none;") #end
+#if ($paramhidenext) #set ($spaninnernextstyle = "display: none;") #end
 
 ## Define variables:
 #if ($paramusehome)
@@ -56,10 +54,10 @@
 #set ($next = 0)
 
 ## Define the macro:
-#macro( process $rp ) 
-	#set( $pagelist = $rp.getSortedChildren() )
-	#foreach( $child in $pagelist ) 
-		#set ($canAdd = $myArray.add($child) )
+#macro (process $rp)
+	#set ($pagelist = $rp.getSortedChildren())
+	#foreach ($child in $pagelist)
+		#set ($canAdd = $myArray.add($child))
 		## $content is a ContentEntityObject that refers to the current page. 
 		## Here, we compare the current page with the child. If they match, then we know what the next and prev pages are.
 		#if ($content == $child)
@@ -73,7 +71,7 @@
 		## Increment the counter:
 		#set ($counter = $counter + 1)
 		## Recursively process the document tree until all children have been run through.
-		#if( $child.hasChildren() )#process( $child )#end
+		#if ($child.hasChildren()) #process ($child) #end
 	#end
 #end
 
@@ -105,7 +103,21 @@
 		#set ($nexttext = $myArray.get($next).getDisplayTitle() + " >>")
 	#end
 	<div id="prevnext">
-		<span class="$spanprevclass" title="$myArray.get($prev).getDisplayTitle()"><a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">$prevtext</a></span><span class="$spanhomeclass" title="Back to the homepage"><a href="$req.contextPath/display/$space.Key/">$!linktext</a></span><span class="$spannextclass" title="$myArray.get($next).getDisplayTitle()"><a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$nexttext</a></span>
+		<span class="$spanprevclass">
+			<span style="$!spaninnerprevstyle" title="$myArray.get($prev).getDisplayTitle()">
+				<a href="$config.getDomainName()$myArray.get($prev).getUrlPath()">$prevtext</a>
+			</span>
+		</span>
+		<span class="$spanhomeclass">
+			<span style="$!spaninnerhomestyle" title="Back to the homepage">
+				<a href="$req.contextPath/display/$space.Key/">$!linktext</a>
+			</span>
+		</span>
+		<span class="$spannextclass">
+			<span style="$!spaninnernextstyle" title="$myArray.get($next).getDisplayTitle()">
+				<a href="$config.getDomainName()$myArray.get($next).getUrlPath()">$nexttext</a>
+			</span>
+		</span>
 	</div>
 #end
 
