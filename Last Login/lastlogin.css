@@ -28,24 +28,25 @@
 				<th>User</th>
 				<th>Email</th>				
 				<th>Last Successful Login</th>
-				<th>Days</th>
 				<th>Creation</th>
+				<th>Days</th>
 				<th>Active</th>
 			</tr>
 			#foreach ($user in $users)
 				#set ($crowdUser = $crowdService.getUser($user.name))
-				#set ($t3 = "N/A")
 				#if ($loginManager.getLoginInfo($user).lastSuccessfulLoginDate)
 					#set ($t2 = $loginManager.getLoginInfo($user).lastSuccessfulLoginDate.time)
-					#set ($t3 = $t1 - $t2) 
-					#set ($t3 = $t3/1000/24/60/60)
+				#else
+					#set ($t2 = $crowdUser.createdDate.time)
 				#end
+				#set ($t3 = $t1 - $t2) 
+				#set ($t3 = $t3/1000/24/60/60)
 				<tr>
 					<td>$user.name</td>
 					<td>$user.email</td> 
 					<td>$action.dateFormatter.formatGivenString('yyyy/MM/dd HH:mm', $loginManager.getLoginInfo($user).lastSuccessfulLoginDate)</td>
-					<td>$t3</td>
 					<td>$action.dateFormatter.formatGivenString('yyyy/MM/dd HH:mm', $crowdUser.createdDate)</td>
+					<td>$t3</td>
 					<td style="text-align:center;">
 						#if($userAccessor.isDeactivated($user))
 							<ac:macro ac:name="status">
